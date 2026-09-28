@@ -27,7 +27,14 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
-    <img class="portrait" src="assets/charles.jpg" alt="Portrait of Charles Toriola">
+    <div class="reel-stage">
+      <button class="reel" id="reel" aria-label="Play motion graphics showreel">
+        <video src="assets/showreel.mp4#t=0.5" playsinline preload="metadata"></video>
+        <span class="reel-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="reel-label">Motion showreel</span>
+      </button>
+      <div class="reel-shadow"></div>
+    </div>
     <div class="hero-glow"></div>
 
     <span class="chip c1"><i style="--c:#7cc8ff"></i>Brand Identity</span>
@@ -49,7 +56,10 @@
   <!-- INTRO / STATS -->
   <section class="dark intro" id="work">
     <div class="wrap grid-2">
-      <p class="eyebrow">• Selected impact</p>
+      <div>
+        <p class="eyebrow">• Selected impact</p>
+        <img class="portrait" src="assets/charles.jpg" alt="Portrait of Charles Toriola">
+      </div>
       <div>
         <h2 class="lime">Creative direction that turns weeks into days.</h2>
         <p class="muted">From rebrands and product catalogues to event films and twice-weekly livestreams, I combine strategic creative thinking with hands-on production to deliver assets that look sharp and move numbers.</p>
@@ -179,7 +189,16 @@
   <!-- SKILLS -->
   <section class="dark skills" id="skills">
     <div class="wrap grid-2">
-      <p class="eyebrow">• Toolkit</p>
+      <div>
+        <p class="eyebrow">• Toolkit</p>
+        <div class="tool-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="22"/>
+            <path d="M32 10l9 17M54 32l-19 1M43 51l-10-16M21 51l10-16M10 32l19 1M21 13l10 17"/>
+            <circle cx="32" cy="32" r="6"/>
+          </svg>
+        </div>
+      </div>
       <div>
         <h2 class="lime">Craft &amp; tools</h2>
         <h4>Creative</h4>
@@ -214,7 +233,15 @@
 
 <script>
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), {threshold: .15});
-  document.querySelectorAll('h2, .card, .stats > div, .xp-row, .perf').forEach(el => { el.classList.add('reveal'); io.observe(el); });
+  document.querySelectorAll('h2, .card, .stats > div, .xp-row, .perf, .portrait').forEach(el => { el.classList.add('reveal'); io.observe(el); });
+
+  const reel = document.getElementById('reel');
+  const vid = reel.querySelector('video');
+  reel.addEventListener('click', () => {
+    vid.paused ? vid.play() : vid.pause();
+  });
+  vid.addEventListener('play', () => reel.classList.add('playing'));
+  vid.addEventListener('pause', () => reel.classList.remove('playing'));
 </script>
 </body>
 </html>

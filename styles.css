@@ -34,11 +34,33 @@ img { display: block; max-width: 100%; }
 /* HERO */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; overflow: hidden; background: var(--ink); padding: 90px 0 0; }
 .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%, #6e7268, #2a2f24 60%, var(--ink)); }
-.portrait { position: relative; z-index: 1; height: min(50vh, 500px); width: auto; aspect-ratio: 1; object-fit: cover; -webkit-mask: radial-gradient(ellipse 50% 50% at 50% 45%, #000 62%, transparent 100%); mask: radial-gradient(ellipse 50% 50% at 50% 45%, #000 62%, transparent 100%); }
+/* 3D showreel tile */
+.reel-stage { position: relative; z-index: 2; perspective: 1400px; margin-bottom: 20px; }
+.reel { --s: min(40vh, 400px); position: relative; display: block; width: var(--s); height: var(--s); padding: 0; border: 0; cursor: pointer; border-radius: 34px; background: #1b2310; overflow: hidden;
+  transform: rotateX(14deg) rotateY(-24deg) rotateZ(6deg); transform-style: preserve-3d; transition: transform .8s cubic-bezier(.2,.8,.2,1), box-shadow .8s;
+  box-shadow: 0 0 0 10px #2b3320, 0 0 0 12px #50573f, -30px 50px 80px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.08);
+  animation: bob 7s ease-in-out infinite; }
+.reel:hover { transform: rotateX(8deg) rotateY(-14deg) rotateZ(3deg); }
+.reel.playing { transform: none; animation: none; }
+.reel video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reel::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(125deg, rgba(255,255,255,.18), transparent 35%), linear-gradient(to top, rgba(15,21,9,.6), transparent 45%); transition: opacity .5s; }
+.reel.playing::after, .reel.playing .reel-play, .reel.playing .reel-label { opacity: 0; }
+.reel-play { position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%; background: var(--lime); display: grid; place-items: center; z-index: 2; box-shadow: 0 0 0 10px rgba(212,255,63,.2), 0 10px 30px rgba(0,0,0,.4); transition: opacity .4s, transform .3s; }
+.reel:hover .reel-play { transform: scale(1.08); }
+.reel-play svg { width: 30px; fill: var(--ink); margin-left: 4px; }
+.reel-label { position: absolute; left: 22px; bottom: 18px; z-index: 2; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #fff; transition: opacity .4s; }
+.reel-shadow { width: 70%; height: 28px; margin: 34px auto 0; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,.55), transparent 70%); filter: blur(6px); }
+@keyframes bob { 50% { translate: 0 -12px; } }
+
+/* portrait in Selected impact */
+.portrait { width: 100%; max-width: 300px; aspect-ratio: 4/5; object-fit: cover; object-position: center 30%; border-radius: 22px; margin-top: 8px; filter: saturate(.9); box-shadow: 0 0 0 1px rgba(212,255,63,.2), 0 30px 60px rgba(0,0,0,.4); }
+.tool-icon { width: 120px; height: 120px; margin-top: 8px; border-radius: 30px; display: grid; place-items: center; color: var(--ink); background: radial-gradient(circle at 30% 25%, #eaff9a, var(--lime) 55%, #9fcc1c); box-shadow: 0 20px 50px rgba(212,255,63,.2); }
+.tool-icon svg { width: 64px; animation: spin 18s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .hero-glow { position: absolute; left: -10%; top: 25%; width: 70%; height: 60%; background: radial-gradient(ellipse, rgba(212,255,63,.35), transparent 65%); transform: rotate(-20deg); mix-blend-mode: screen; filter: blur(30px); pointer-events: none; animation: drift 9s ease-in-out infinite alternate; }
 @keyframes drift { to { transform: rotate(-12deg) translate(8%, -4%); } }
-.hero-copy { position: relative; z-index: 2; text-align: center; padding: 8px 24px 6vh; margin-top: -40px; max-width: 920px; }
+.hero-copy { position: relative; z-index: 2; text-align: center; padding: 8px 24px 6vh; max-width: 920px; }
 .hero h1 { font-weight: 400; font-size: clamp(36px, 5vw, 64px); line-height: 1.04; letter-spacing: -.03em; }
 .hero p { margin: 22px auto 0; max-width: 520px; color: #d8ddcf; font-size: 16px; line-height: 1.55; }
 .hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
@@ -126,7 +148,8 @@ h2.big { font-size: clamp(38px, 6vw, 80px); line-height: 1.02; margin-bottom: 20
   .cards { grid-template-columns: 1fr; }
   .perf { justify-self: start; }
   .chip { font-size: 11px; }
-  .portrait { height: min(42vh, 360px); }
+  .reel { --s: min(72vw, 40vh); border-radius: 24px; }
+  .portrait { max-width: 240px; }
   .c1 { left: 4%; top: 16%; } .c2 { right: 4%; top: 12%; } .c3 { right: 3%; top: 34%; } .c4 { left: 3%; top: 36%; } .c5 { display: none; }
   section { padding: 80px 0; }
   .wrap { padding: 0 16px; }
