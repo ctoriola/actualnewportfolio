@@ -30,7 +30,7 @@
     <div class="hero-bg"></div>
     <div class="reel-stage">
       <button class="reel" id="reel" aria-label="Play motion graphics showreel">
-        <video src="assets/showreel.mp4#t=0.5" playsinline preload="metadata"></video>
+        <video src="assets/showreel.mp4" muted playsinline preload="auto"></video>
         <span class="reel-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="reel-label">Motion showreel</span>
       </button>
@@ -271,11 +271,27 @@
 
   const reel = document.getElementById('reel');
   const vid = reel.querySelector('video');
+  // Silent preview: plays once, muted, on first load so visitors see it's a video
+  let preview = false;
+  const endPreview = () => {
+    preview = false; reel.classList.remove('preview');
+    vid.pause(); vid.currentTime = 0; vid.muted = false;
+  };
+  const startPreview = () => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    vid.muted = true; preview = true; reel.classList.add('preview');
+    vid.play().catch(() => { preview = false; reel.classList.remove('preview'); });
+  };
+  if (vid.readyState >= 3) startPreview(); else vid.addEventListener('canplay', startPreview, { once: true });
+
   reel.addEventListener('click', () => {
+    if (preview) { endPreview(); vid.play(); return; }  // restart from the top with sound
+    vid.muted = false;
     vid.paused ? vid.play() : vid.pause();
   });
-  vid.addEventListener('play', () => reel.classList.add('playing'));
+  vid.addEventListener('play', () => { if (!preview) reel.classList.add('playing'); });
   vid.addEventListener('pause', () => reel.classList.remove('playing'));
+  vid.addEventListener('ended', () => { if (preview) endPreview(); });
 
   const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
   document.querySelectorAll('.shot img').forEach(img => img.addEventListener('click', () => {
