@@ -130,24 +130,23 @@
         </div>
       </div>
       <div class="gallery-grid">
-        <figure class="shot tall"><!-- Replace with: <img src="assets/work/design-01.jpg" alt="Design title"> --><div class="shot-ph"><b>01</b>Design coming soon</div></figure>
-        <figure class="shot"><!-- Replace with: <img src="assets/work/design-02.jpg" alt="Design title"> --><div class="shot-ph"><b>02</b>Design coming soon</div></figure>
-        <figure class="shot"><!-- Replace with: <img src="assets/work/design-03.jpg" alt="Design title"> --><div class="shot-ph"><b>03</b>Design coming soon</div></figure>
-        <figure class="shot"><!-- Replace with: <img src="assets/work/design-04.jpg" alt="Design title"> --><div class="shot-ph"><b>04</b>Design coming soon</div></figure>
-        <figure class="shot wide"><!-- Replace with: <img src="assets/work/design-05.jpg" alt="Design title"> --><div class="shot-ph"><b>05</b>Design coming soon</div></figure>
-        <figure class="shot"><!-- Replace with: <img src="assets/work/design-06.jpg" alt="Design title"> --><div class="shot-ph"><b>06</b>Design coming soon</div></figure>
-        <figure class="shot wide"><!-- Replace with: <img src="assets/work/design-07.jpg" alt="Design title"> --><div class="shot-ph"><b>07</b>Design coming soon</div></figure>
-        <figure class="shot tall"><!-- Replace with: <img src="assets/work/design-08.jpg" alt="Design title"> --><div class="shot-ph"><b>08</b>Design coming soon</div></figure>
-        <figure class="shot tall"><!-- Replace with: <img src="assets/work/design-09.jpg" alt="Design title"> --><div class="shot-ph"><b>09</b>Design coming soon</div></figure>
-        <figure class="shot wide"><!-- Replace with: <img src="assets/work/design-10.jpg" alt="Design title"> --><div class="shot-ph"><b>10</b>Design coming soon</div></figure>
+        <figure class="shot"><img src="assets/work/design-01.jpg" alt="Happy Birthday, Admiral Ohio" loading="lazy"><figcaption><span>Social graphic</span>Happy Birthday, Admiral Ohio</figcaption></figure>
+        <figure class="shot"><img src="assets/work/design-02.jpg" alt="Democracy Day — PrimeTEK Group" loading="lazy"><figcaption><span>Campaign poster</span>Democracy Day — PrimeTEK Group</figcaption></figure>
+        <figure class="shot"><img src="assets/work/design-03.jpg" alt="Eid Mubarak — Eid al-Adha" loading="lazy"><figcaption><span>Campaign poster</span>Eid Mubarak — Eid al-Adha</figcaption></figure>
+        <figure class="shot"><img src="assets/work/design-04.jpg" alt="Eid al-Maulud Mubarak" loading="lazy"><figcaption><span>Campaign poster</span>Eid al-Maulud Mubarak</figcaption></figure>
+        <figure class="shot"><img src="assets/work/design-05.jpg" alt="Democracy Day — Granny Murray Schools" loading="lazy"><figcaption><span>School social</span>Democracy Day — Granny Murray Schools</figcaption></figure>
+        <figure class="shot empty"><!-- Replace with: <img src="assets/work/design-06.jpg" alt="Design title" loading="lazy"><figcaption><span>Tag</span>Title</figcaption> --><div class="shot-ph"><b>06</b>Design coming soon</div></figure>
+        <figure class="shot empty"><!-- Replace with: <img src="assets/work/design-07.jpg" alt="Design title" loading="lazy"><figcaption><span>Tag</span>Title</figcaption> --><div class="shot-ph"><b>07</b>Design coming soon</div></figure>
+        <figure class="shot empty"><!-- Replace with: <img src="assets/work/design-08.jpg" alt="Design title" loading="lazy"><figcaption><span>Tag</span>Title</figcaption> --><div class="shot-ph"><b>08</b>Design coming soon</div></figure>
+        <figure class="shot empty"><!-- Replace with: <img src="assets/work/design-09.jpg" alt="Design title" loading="lazy"><figcaption><span>Tag</span>Title</figcaption> --><div class="shot-ph"><b>09</b>Design coming soon</div></figure>
+        <figure class="shot empty"><!-- Replace with: <img src="assets/work/design-10.jpg" alt="Design title" loading="lazy"><figcaption><span>Tag</span>Title</figcaption> --><div class="shot-ph"><b>10</b>Design coming soon</div></figure>
       </div>
       <div class="drive">
         <div>
           <h3>Want to see more?</h3>
           <p>Browse the full archive of designs, videos and motion work on Google Drive.</p>
         </div>
-        <!-- Replace # with the Google Drive folder link -->
-        <a href="#" class="btn" target="_blank" rel="noopener">Open Google Drive ↗</a>
+        <a href="https://drive.google.com/drive/folders/1dR0bheCgAM76rYGLXpDpPbsf07zTeTqo?usp=share_link" class="btn" target="_blank" rel="noopener">Open Google Drive ↗</a>
       </div>
     </div>
   </section>
@@ -264,6 +263,8 @@
   <span><a href="https://charlestoriola.netlify.app">charlestoriola.netlify.app</a></span>
 </footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Design preview"><img alt=""></div>
+
 <script>
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), {threshold: .15});
   document.querySelectorAll('h2, .card, .stats > div, .xp-row, .perf, .portrait, .shot').forEach(el => { el.classList.add('reveal'); io.observe(el); });
@@ -275,6 +276,13 @@
   });
   vid.addEventListener('play', () => reel.classList.add('playing'));
   vid.addEventListener('pause', () => reel.classList.remove('playing'));
+
+  const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
+  document.querySelectorAll('.shot img').forEach(img => img.addEventListener('click', () => {
+    lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open');
+  }));
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+  document.addEventListener('keydown', e => e.key === 'Escape' && lb.classList.remove('open'));
 </script>
 </body>
 </html>
