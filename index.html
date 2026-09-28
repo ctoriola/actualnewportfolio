@@ -16,6 +16,7 @@
   <a href="#top" class="logo"><span class="logo-mark"></span>Charles Toriola</a>
   <nav class="nav-links">
     <a href="#work">Work</a>
+    <a href="#gallery">Gallery</a>
     <a href="#about">About</a>
     <a href="#experience">Experience</a>
     <a href="#skills">Toolkit</a>
@@ -115,6 +116,38 @@
           <h3>Twice-weekly livestreams</h3>
           <p>Two cameras, three screens, OBS and an ATEM TV Studio switcher for a community of ~500 members.</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="dark gallery" id="gallery">
+    <div class="wrap">
+      <div class="gallery-head">
+        <div>
+          <p class="eyebrow">• Design gallery</p>
+          <h2 class="lime">A selection of recent design work.</h2>
+        </div>
+      </div>
+      <div class="gallery-grid">
+        <figure class="shot tall"><!-- Replace with: <img src="assets/work/design-01.jpg" alt="Design title"> --><div class="shot-ph"><b>01</b>Design coming soon</div></figure>
+        <figure class="shot"><!-- Replace with: <img src="assets/work/design-02.jpg" alt="Design title"> --><div class="shot-ph"><b>02</b>Design coming soon</div></figure>
+        <figure class="shot"><!-- Replace with: <img src="assets/work/design-03.jpg" alt="Design title"> --><div class="shot-ph"><b>03</b>Design coming soon</div></figure>
+        <figure class="shot"><!-- Replace with: <img src="assets/work/design-04.jpg" alt="Design title"> --><div class="shot-ph"><b>04</b>Design coming soon</div></figure>
+        <figure class="shot wide"><!-- Replace with: <img src="assets/work/design-05.jpg" alt="Design title"> --><div class="shot-ph"><b>05</b>Design coming soon</div></figure>
+        <figure class="shot"><!-- Replace with: <img src="assets/work/design-06.jpg" alt="Design title"> --><div class="shot-ph"><b>06</b>Design coming soon</div></figure>
+        <figure class="shot wide"><!-- Replace with: <img src="assets/work/design-07.jpg" alt="Design title"> --><div class="shot-ph"><b>07</b>Design coming soon</div></figure>
+        <figure class="shot tall"><!-- Replace with: <img src="assets/work/design-08.jpg" alt="Design title"> --><div class="shot-ph"><b>08</b>Design coming soon</div></figure>
+        <figure class="shot tall"><!-- Replace with: <img src="assets/work/design-09.jpg" alt="Design title"> --><div class="shot-ph"><b>09</b>Design coming soon</div></figure>
+        <figure class="shot wide"><!-- Replace with: <img src="assets/work/design-10.jpg" alt="Design title"> --><div class="shot-ph"><b>10</b>Design coming soon</div></figure>
+      </div>
+      <div class="drive">
+        <div>
+          <h3>Want to see more?</h3>
+          <p>Browse the full archive of designs, videos and motion work on Google Drive.</p>
+        </div>
+        <!-- Replace # with the Google Drive folder link -->
+        <a href="#" class="btn" target="_blank" rel="noopener">Open Google Drive ↗</a>
       </div>
     </div>
   </section>
@@ -233,7 +266,7 @@
 
 <script>
   const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), {threshold: .15});
-  document.querySelectorAll('h2, .card, .stats > div, .xp-row, .perf, .portrait').forEach(el => { el.classList.add('reveal'); io.observe(el); });
+  document.querySelectorAll('h2, .card, .stats > div, .xp-row, .perf, .portrait, .shot').forEach(el => { el.classList.add('reveal'); io.observe(el); });
 
   const reel = document.getElementById('reel');
   const vid = reel.querySelector('video');
