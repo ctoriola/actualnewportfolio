@@ -29,7 +29,7 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="reel-stage">
-      <button class="reel" id="reel" aria-label="Play motion graphics showreel">
+      <button class="reel preview" id="reel" aria-label="Play motion graphics showreel">
         <video src="assets/showreel.mp4" poster="assets/showreel-poster.jpg" muted playsinline preload="auto"></video>
         <span class="reel-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
         <span class="reel-label">Motion showreel</span>
@@ -271,27 +271,36 @@
 
   const reel = document.getElementById('reel');
   const vid = reel.querySelector('video');
-  // Silent preview: plays once, muted, on first load so visitors see it's a video
+  // Intro play: runs once on first load so visitors see it's a video.
+  // Tries with sound; if the browser blocks that, plays muted and unmutes on the first interaction.
   let preview = false;
+  const unlockEvents = ['pointerdown', 'keydown', 'touchstart'];
+  const unmute = () => { vid.muted = false; unlockEvents.forEach(e => removeEventListener(e, unmute)); };
   const endPreview = () => {
     preview = false; reel.classList.remove('preview');
-    vid.pause(); vid.currentTime = 0; vid.muted = false;
+    vid.pause(); vid.currentTime = 0; unmute();
   };
   const startPreview = () => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    vid.muted = true; preview = true; reel.classList.add('preview');
-    vid.play().catch(() => { preview = false; reel.classList.remove('preview'); });
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return endPreview();
+    preview = true; reel.classList.add('preview');
+    vid.muted = false;
+    vid.play().catch(() => {
+      vid.muted = true;
+      unlockEvents.forEach(e => addEventListener(e, unmute, { passive: true }));
+      vid.play().catch(endPreview);
+    });
   };
   if (vid.readyState >= 3) startPreview(); else vid.addEventListener('canplay', startPreview, { once: true });
 
   reel.addEventListener('click', () => {
-    if (preview) { endPreview(); vid.play(); return; }  // restart from the top with sound
+    if (preview) return;  // intro is playing; the click just turns the sound on
     vid.muted = false;
     vid.paused ? vid.play() : vid.pause();
   });
   vid.addEventListener('play', () => { if (!preview) reel.classList.add('playing'); });
   vid.addEventListener('pause', () => reel.classList.remove('playing'));
   vid.addEventListener('ended', () => { if (preview) endPreview(); });
+  vid.addEventListener('error', endPreview);
 
   const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
   document.querySelectorAll('.shot img').forEach(img => img.addEventListener('click', () => {
